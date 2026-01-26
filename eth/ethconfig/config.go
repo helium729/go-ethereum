@@ -208,6 +208,10 @@ type Config struct {
 
 	// RangeLimit restricts the maximum range (end - start) for range queries.
 	RangeLimit uint64 `toml:",omitempty"`
+
+	// BeaconCommsTimeout is the duration after which the node considers itself
+	// unsynced if no consensus updates are received from the beacon client.
+	BeaconCommsTimeout time.Duration `toml:",omitempty"`
 }
 
 // CreateConsensusEngine creates a consensus engine for the given chain config.

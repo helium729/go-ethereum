@@ -393,6 +393,12 @@ var (
 		Usage:    "Path to a JWT secret to use for target engine API endpoint",
 		Category: flags.BeaconCategory,
 	}
+	BeaconCommsTimeoutFlag = &cli.DurationFlag{
+		Name:     "beacon.comms-timeout",
+		Usage:    "Timeout for beacon communication before regarding node as unsynced",
+		Value:    0, // 0 = use default
+		Category: flags.BeaconCategory,
+	}
 	// Transaction pool settings
 	TxPoolLocalsFlag = &cli.StringFlag{
 		Name:     "txpool.locals",

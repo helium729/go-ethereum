@@ -427,6 +427,11 @@ func (d *Downloader) ConfigSyncMode() SyncMode {
 	return d.moder.get(false)
 }
 
+// Synchronising returns true if the downloader is currently performing a sync.
+func (d *Downloader) Synchronising() bool {
+	return d.synchronising.Load()
+}
+
 // syncToHead starts a block synchronization based on the hash chain from
 // the specified head hash.
 func (d *Downloader) syncToHead() (err error) {

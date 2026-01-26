@@ -962,7 +962,17 @@ func (api *ConsensusAPI) heartbeat() {
 
 		// If there have been no updates for the past while, warn the user
 		// that the beacon client is probably offline
-		if time.Since(lastForkchoiceUpdate) <= beaconUpdateConsensusTimeout || time.Since(lastNewPayloadUpdate) <= beaconUpdateConsensusTimeout {
+		var (
+			timeout = beaconUpdateConsensusTimeout
+			cfg     = api.eth.EthConfig()
+		)
+		if cfg.BeaconCommsTimeout > 0 {
+			timeout = cfg.BeaconCommsTimeout
+		}
+		if time.Since(lastForkchoiceUpdate) <= timeout || time.Since(lastNewPayloadUpdate) <= timeout {
+			if !api.eth.Synced() && !api.eth.Downloader().Synchronising() {
+				api.eth.SetSynced()
+			}
 			offlineLogged = time.Time{}
 			continue
 		}
@@ -978,6 +988,8 @@ func (api *ConsensusAPI) heartbeat() {
 			}
 			offlineLogged = time.Now()
 		}
+		// If we're not receiving updates, we're not synced
+		api.eth.SetUnsynced()
 		continue
 	}
 }

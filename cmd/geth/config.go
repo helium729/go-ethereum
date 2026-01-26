@@ -238,6 +238,9 @@ func makeFullNode(ctx *cli.Context) *node.Node {
 		v := ctx.Uint64(utils.OverrideVerkle.Name)
 		cfg.Eth.OverrideVerkle = &v
 	}
+	if ctx.IsSet(utils.BeaconCommsTimeoutFlag.Name) {
+		cfg.Eth.BeaconCommsTimeout = ctx.Duration(utils.BeaconCommsTimeoutFlag.Name)
+	}
 
 	// Start metrics export if enabled
 	utils.SetupMetrics(&cfg.Metrics)

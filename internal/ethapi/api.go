@@ -149,7 +149,7 @@ func (api *EthereumAPI) Syncing(ctx context.Context) (interface{}, error) {
 	progress := api.b.SyncProgress(ctx)
 
 	// Return not syncing if the synchronisation already completed
-	if progress.Done() {
+	if progress.Done() && api.b.Synced() {
 		return false, nil
 	}
 	// Otherwise gather the block sync stats

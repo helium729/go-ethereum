@@ -532,6 +532,12 @@ func (h *handler) enableSyncedFeatures() {
 	h.synced.Store(true)
 }
 
+// disableSyncedFeatures disables the post-sync functionalities when the initial
+// sync is finished.
+func (h *handler) disableSyncedFeatures() {
+	h.synced.Store(false)
+}
+
 // blockRangeState holds the state of the block range update broadcasting mechanism.
 type blockRangeState struct {
 	prev    eth.BlockRangeUpdatePacket

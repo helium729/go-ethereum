@@ -87,6 +87,7 @@ type Backend interface {
 	TxPoolContentFrom(addr common.Address) ([]*types.Transaction, []*types.Transaction)
 	SubscribeNewTxsEvent(chan<- core.NewTxsEvent) event.Subscription
 
+	Synced() bool
 	ChainConfig() *params.ChainConfig
 	Engine() consensus.Engine
 	HistoryPruningCutoff() uint64
